@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{$title ?? 'I like a job'}}</title>
+    <title>@yield('title','I like a job')</title>
 </head>
 <body class="bg-gray-100">
     {{-- @include('partials.navbar') --}}
@@ -12,9 +12,6 @@
    <main class="container mx-auto p-4 m-4">
    
     {{-- @yield('content') --}}
-    {{
-        $slot
-    }}
     
    </main>
     <x-footer />

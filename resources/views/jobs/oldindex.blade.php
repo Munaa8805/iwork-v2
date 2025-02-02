@@ -1,4 +1,9 @@
-<x-layout>
+@extends('layout')
+@section('title')
+Jobs
+@endsection
+    
+    @section('content')
     <h1>Works page Works </h1>
     <ul>
         @forelse($jobs as $job)
@@ -10,4 +15,4 @@
             <li>No jobs found</li>
         @endforelse
     </ul>
-</x-layout>
+    @endsection
