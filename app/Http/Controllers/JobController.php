@@ -2,38 +2,81 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
-
-class  JobController extends Controller
+class JobController extends Controller
 {
-    public function index()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(): View
     {
+        //
         $jobs = [
-            'Job 1',
-            'Job 2',
-            'Job 3',
-            'Job 4',
-            'Job 5',
+            'Web Developer',
+            'Software Engineer',
         ];
-        $title = 'Job Listings';
-        return view('jobs', [
-            'jobs' => $jobs,
-            'title' => $title
-        ]);
+        return view('jobs.index', compact('jobs'));
     }
+
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
+        //
         return view('jobs.create');
     }
-    public function show($id)
-    {
-        return view('jobs.show', ['id' => $id]);
-    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $title = $request->input('title');
-        $description = $request->input('description');
-        return "Job title: $title, Description: $description";
+        //
+        return 'store';
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+        return 'show';
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+        return 'edit';
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+        return 'update';
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id): string
+    {
+        //
+        return 'destroy';
+    }
+    public function share()
+    {
+        // return view('jobs.share');
+        return 'share';
     }
 }

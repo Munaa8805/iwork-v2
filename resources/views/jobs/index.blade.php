@@ -1,12 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Works page Works</h1>
-</body>
-</html>
+@extends('layout')
+@section('title')
+Jobs
+@endsection
+    
+    @section('content')
+    <h1>Works page Works </h1>
+    <ul>
+        @forelse($jobs as $job)
+            <li>
+                {{-- <a href="{{ route('jobs.show', $job->id) }}">{{ $job->title }}</a> --}}
+                {{$job}}
+            </li>
+        @empty
+            <li>No jobs found</li>
+        @endforelse
+    </ul>
+    @endsection
