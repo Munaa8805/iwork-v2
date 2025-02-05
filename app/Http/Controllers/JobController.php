@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Job;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -36,12 +37,12 @@ class JobController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-
-
+        // dd($request->all());
+        // dd($request->file('company_logo'));
 
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'required|string|min:5',
             'salary' => 'required|integer',
             'tags' => 'nullable|string',
             'job_type' => 'required|string',
@@ -59,7 +60,7 @@ class JobController extends Controller
             'company_logo' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
             'company_website' => 'nullable|url'
         ]);
-
+        // dd($validatedData);
 
         // Check for image
         if ($request->hasFile('company_logo')) {
@@ -69,6 +70,7 @@ class JobController extends Controller
             // Add path to validated data
             $validatedData['company_logo'] = $path;
         }
+        $validatedData['user_id'] = 1;
 
         Job::create($validatedData);
         return redirect()->route('jobs.index')->with('success', 'Job created successfully.');
@@ -85,28 +87,72 @@ class JobController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Job $job): View
     {
         //
-        return 'edit';
+        return view('jobs.edit')->with('job', $job);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Job $job): string
     {
         //
-        return 'update';
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|min:5',
+            'salary' => 'required|integer',
+            'tags' => 'nullable|string',
+            'job_type' => 'required|string',
+            'remote' => 'required|boolean',
+            'requirements' => 'nullable|string',
+            'benefits' => 'nullable|string',
+            'address' => 'nullable|string',
+            'city' => 'required|string',
+            'state' => 'required|string',
+            'zipcode' => 'nullable|string',
+            'contact_email' => 'required|string',
+            'contact_phone' => 'nullable|string',
+            'company_name' => 'required|string',
+            'company_description' => 'nullable|string',
+            'company_logo' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
+            'company_website' => 'nullable|url'
+        ]);
+        // dd($validatedData);
+
+        // Check for image
+        if ($request->hasFile('company_logo')) {
+            // Delete old logo
+            Storage::delete('public/logos/' . basename($job->company_logo));
+
+            // Store the file and get path
+            $path = $request->file('company_logo')->store('logos', 'public');
+
+            // Add path to validated data
+            $validatedData['company_logo'] = $path;
+        }
+
+
+
+        $job->update($validatedData);
+        return redirect()->route('jobs.index')->with('success', 'Job listing updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): string
+    public function destroy(Job $job): RedirectResponse
     {
         //
-        return 'destroy';
+        // If logo, then delete it
+        if ($job->company_logo) {
+            Storage::delete('public/logos/' . $job->company_logo);
+        }
+
+        $job->delete();
+
+        return redirect()->route('jobs.index')->with('success', 'Job listing deleted successfully!');
     }
     public function share()
     {

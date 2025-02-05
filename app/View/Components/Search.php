@@ -3,10 +3,10 @@
 namespace App\View\Components;
 
 use Closure;
-use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
-class top-banner extends Component
+class Search extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class top-banner extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.top-banner');
+        return view('components.search');
     }
 }
