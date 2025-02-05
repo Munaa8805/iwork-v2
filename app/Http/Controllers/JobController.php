@@ -40,16 +40,16 @@ class JobController extends Controller
         // $description = $request->input('description');
 
         $validatedData = $request->validate([
-            'title' => 'required|string|max:255|min:5',
+            'title' => 'required|string|max:255|min:100',
             'description' => 'required|string|max:505|min:5'
         ]);
 
 
 
-        Job::create([
-            'title' => $validatedData['title'],
-            'description' => $validatedData['description']
-        ]);
+        // Job::create([
+        //     'title' => $validatedData['title'],
+        //     'description' => $validatedData['description']
+        // ]);
         return redirect()->route('jobs.index');
     }
     /**
