@@ -9,9 +9,7 @@
                     Create Job Listing
                 </h2>
                 <form
-                    method="POST"
-                    action="/jobs"
-                    enctype="multipart/form-data"
+                  method="POST" action="{{route('jobs.store')}}" enctype="multipart/form-data"
                 >
                     @csrf
                     <h2
@@ -94,6 +92,8 @@
                         >
                         <textarea
                             id="benefits"
+                            cols='20'
+                            rows='5'
                             name="benefits"
                             class="w-full px-4 py-2 border rounded focus:outline-none"
                             placeholder="Health insurance, 401k, paid time off"
@@ -259,6 +259,8 @@
                         >
                         <textarea
                             id="company_description"
+                            cols="30"
+                            rows="7"
                             name="company_description"
                             class="w-full px-4 py-2 border rounded @error('company_description') border-red-500 @enderror focus:outline-none"
                             placeholder="Company Description"
@@ -275,7 +277,8 @@
                         >
                         <input
                             id="company_website"
-                            type="text"
+                            type="url"
+                               {{-- type="text" --}}
                             name="company_website"
                             class="w-full px-4 py-2 border rounded @error('company_website') border-red-500 @enderror  focus:outline-none"
                             placeholder="Enter website"
@@ -328,12 +331,10 @@
                         />
                     </div>
 
-                    <button
-                        type="submit"
-                        class="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 my-3 rounded focus:outline-none"
-                    >
-                        Save
-                    </button>
+                    <button type="submit"
+        class="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 my-3 rounded focus:outline-none">
+        Save
+      </button>
                 </form>
             </div>
 </x-layout>

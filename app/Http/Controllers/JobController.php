@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Job;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+
 
 class JobController extends Controller
 {
@@ -36,21 +37,41 @@ class JobController extends Controller
     public function store(Request $request): RedirectResponse
     {
 
-        // $title = $request->input('title');
-        // $description = $request->input('description');
+
 
         $validatedData = $request->validate([
-            'title' => 'required|string|max:255|min:100',
-            'description' => 'required|string|max:505|min:5'
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'salary' => 'required|integer',
+            'tags' => 'nullable|string',
+            'job_type' => 'required|string',
+            'remote' => 'required|boolean',
+            'requirements' => 'nullable|string',
+            'benefits' => 'nullable|string',
+            'address' => 'nullable|string',
+            'city' => 'required|string',
+            'state' => 'required|string',
+            'zipcode' => 'nullable|string',
+            'contact_email' => 'required|string',
+            'contact_phone' => 'nullable|string',
+            'company_name' => 'required|string',
+            'company_description' => 'nullable|string',
+            'company_logo' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
+            'company_website' => 'nullable|url'
         ]);
 
 
+        // Check for image
+        if ($request->hasFile('company_logo')) {
+            // Store the file and get path
+            $path = $request->file('company_logo')->store('logos', 'public');
 
-        // Job::create([
-        //     'title' => $validatedData['title'],
-        //     'description' => $validatedData['description']
-        // ]);
-        return redirect()->route('jobs.index');
+            // Add path to validated data
+            $validatedData['company_logo'] = $path;
+        }
+
+        Job::create($validatedData);
+        return redirect()->route('jobs.index')->with('success', 'Job created successfully.');
     }
     /**
      * Display the specified resource.
