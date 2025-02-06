@@ -6,8 +6,10 @@ use Illuminate\Http\Responce;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 
-Route::get('/', [HomeController::class, 'index']);
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 
@@ -19,6 +21,11 @@ Route::get('/', [HomeController::class, 'index']);
 // Route::post('/jobs', [JobController::class, 'store']);
 
 //// Job routes
-Route::get('/jobs/share', [JobController::class, 'share']);
+Route::get('/jobs/share', [JobController::class, 'share'])->name('jobs.share');
 Route::resource('jobs', JobController::class);
-Route::resource('login', LoginController::class);
+
+Route::get('/register', [RegisterController::class, 'register'])->name('register');
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');

@@ -35,7 +35,8 @@
     }}
     
    </main>
-    <x-footer />
+   
+    {{-- <x-footer /> --}}
     <script src="{{asset('script/script.js')}}"></script>
 </body>
 </html>
