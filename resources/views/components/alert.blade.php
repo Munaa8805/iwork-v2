@@ -1,5 +1,5 @@
 @props(['type' , 'message','timeout' => '3000'])
-@if(session()->has('type'))
+@if(session()->has($type))
     <div x-data="{show: true}" x-show="show" x-init="setTimeout(()=>show=false, {{$timeout}})"
         x-show="show"
     

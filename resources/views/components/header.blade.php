@@ -15,11 +15,7 @@
             <x-nav-link url="/jobs/saved" :active="request()->is('jobs/saved')">Saved Jobs</x-nav-link>
             <x-nav-link url="/login" :active="request()->is('login')" icon='user'>Login</x-nav-link>
            
-            <a
-                href="{{url('/register')}}"
-                class="text-white py-2 {{request()->is('register') ? 'border-b-2 border-yellow-500 text-yellow-500 font-bold' : ''}}"
-                >Register</a
-            >
+            <x-nav-link url="/register" :active="request()->is('register')">Register</x-nav-link>
             <a
                 href="{{url('/dashboard')}}"
                class="text-white py-2 {{request()->is('dashboard') ? 'border-b-2 border-yellow-500 text-yellow-500 font-bold' : ''}}"
