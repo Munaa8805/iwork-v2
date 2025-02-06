@@ -12,7 +12,10 @@
                         <i class="fa fa-arrow-alt-circle-left"></i>
                         Back To Listings
                     </a>
-                    <div class="flex space-x-3 ml-4">
+
+                  {{-- @auth
+                      @if(auth()->user()->id === $job->user_id)
+                      <div class="flex space-x-3 ml-4">
                         <a
                             href="{{route('jobs.edit', $job->id)}}"
                             class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
@@ -31,6 +34,32 @@
                         </form>
                         <!-- End Delete Form -->
                     </div>
+
+                      @endif
+                  @endauth --}}
+
+
+                  @can('update', $job)
+                  <div class="flex space-x-3 ml-4">
+                    <a
+                        href="{{route('jobs.edit', $job->id)}}"
+                        class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+                        >Edit</a
+                    >
+                    <!-- Delete Form -->
+                    <form method="POST" action="{{route('jobs.destroy', $job->id)}}" onsubmit="return confirm('Are you sure you want to delete this job?')">
+                        @csrf 
+                        @method('DELETE')
+                        <button
+                            type="submit"
+                            class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
+                        >
+                            Delete
+                        </button>
+                    </form>
+                    <!-- End Delete Form -->
+                </div>
+                  @endcan
                 </div>
                 <div class="p-4">
                     <h2 class="text-xl font-semibold">
@@ -103,12 +132,12 @@
                 Company Info
             </h3>
             @if($job->company_logo)
-            <img src="/storage/{{$job->company_logo}}" alt="{{$job->company_name}}"   class="w-14 h-14 rounded-full"/>
+            <img src="/storage/{{$job->company_logo}}" alt="{{$job->company_name}}"   class="w-full"/>
             @else
       <img
       src='/images/default-logo.png'
       alt="{{$job->company_name}}"
-      class="w-14 h-14 rounded-full"
+      class="w-full"
     />
           @endif
             <h4 class="text-lg font-bold">{{$job->company_name}}</h4>
