@@ -12,18 +12,24 @@
             <x-nav-link url="/" :active="request()->is('/')" icon='home' >Home</x-nav-link>
         
             <x-nav-link url="/jobs" :active="request()->is('jobs')">All Jobs</x-nav-link>
+            @auth
+
             <x-nav-link url="/jobs/saved" :active="request()->is('jobs/saved')">Saved Jobs</x-nav-link>
+            <a
+            href="{{url('/dashboard')}}"
+           class="text-white py-2 {{request()->is('dashboard') ? 'border-b-2 border-yellow-500 text-yellow-500 font-bold' : ''}}"
+        >
+            <i class="fa fa-gauge mr-1"></i> Dashboard
+        </a>
+        <x-logout />
+        <x-buttonlink url='/jobs/create' icon='edit'>Create Job
+        </x-buttonlink>
+          
+            @else
             <x-nav-link url="/login" :active="request()->is('login')" icon='user'>Login</x-nav-link>
            
             <x-nav-link url="/register" :active="request()->is('register')">Register</x-nav-link>
-            <a
-                href="{{url('/dashboard')}}"
-               class="text-white py-2 {{request()->is('dashboard') ? 'border-b-2 border-yellow-500 text-yellow-500 font-bold' : ''}}"
-            >
-                <i class="fa fa-gauge mr-1"></i> Dashboard
-            </a>
-            <x-buttonlink url='/jobs/create' icon='edit'>Create Job
-            </x-buttonlink>
+            @endauth
         </nav>
         <button id="hamburger" class="text-white md:hidden flex items-center">
             <i class="fa fa-bars text-2xl"></i>
@@ -32,15 +38,19 @@
     <!-- Mobile Menu -->
     <nav x-show="open" id="mobile-menu" class="hidden md:hidden bg-blue-900 text-white mt-5 pb-4 space-y-2">
         <x-nav-link url="/jobs" :active="request()->is('jobs')" :mobile="true">All Jobs</x-nav-link>
-      
+        @auth
         <x-nav-link url="/bookmarks" :active="request()->is('bookmarks')" :mobile="true">Saved Jobs</x-nav-link>
         <x-nav-link url="/dashboard" :active="request()->is('dashboard')" :mobile="true">Dashbaord</x-nav-link>
         {{-- <x-logout-link/> --}}
         <div class="pt-2"></div>
+        <x-logout />
+        <div class="pt-2"></div>
         <x-buttonlink url='/jobs/create' icon='edit' :block="true">Create Job
         </x-buttonlink>
-    
+       
+        @else
         <x-nav-link url="/login" :active="request()->is('login')" :mobile="true">Login</x-nav-link>
         <x-nav-link url="/register" :active="request()->is('register')" :mobile="true">Register</x-nav-link>
+        @endauth
     </nav>
 </header>

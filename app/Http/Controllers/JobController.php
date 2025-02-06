@@ -9,6 +9,7 @@ use App\Models\Job;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 
 class JobController extends Controller
@@ -61,7 +62,8 @@ class JobController extends Controller
             'company_website' => 'nullable|url'
         ]);
         // dd($validatedData);
-
+        // Hardcoded user ID
+        $validatedData['user_id'] = 1;
         // Check for image
         if ($request->hasFile('company_logo')) {
             // Store the file and get path
@@ -70,7 +72,7 @@ class JobController extends Controller
             // Add path to validated data
             $validatedData['company_logo'] = $path;
         }
-        $validatedData['user_id'] = 1;
+
 
         Job::create($validatedData);
         return redirect()->route('jobs.index')->with('success', 'Job created successfully.');
