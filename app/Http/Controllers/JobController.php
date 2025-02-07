@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -23,7 +24,7 @@ class JobController extends Controller
     public function index(): View
     {
         //
-        $jobs = Job::latest();
+        $jobs = Job::latest()->get();
         return view('jobs.index')->with('jobs', $jobs);
     }
 
