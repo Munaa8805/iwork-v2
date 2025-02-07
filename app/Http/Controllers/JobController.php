@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\Job;
+use App\Models\User;
 
 
 
@@ -22,7 +23,7 @@ class JobController extends Controller
     public function index(): View
     {
         //
-        $jobs = Job::all();
+        $jobs = Job::latest();
         return view('jobs.index')->with('jobs', $jobs);
     }
 
@@ -41,7 +42,7 @@ class JobController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request,): RedirectResponse
     {
         // dd($request->all());
         // dd($request->file('company_logo'));
@@ -68,7 +69,7 @@ class JobController extends Controller
         ]);
         // dd($validatedData);
         // Hardcoded user ID
-        $validatedData['user_id'] = auth()->user()->id;
+        $validatedData['user_id'] = Auth::user()->id;
         // Check for image
         if ($request->hasFile('company_logo')) {
             // Store the file and get path
@@ -163,6 +164,12 @@ class JobController extends Controller
         }
 
         $job->delete();
+
+        // Check if request came from the dashboard
+        if (request()->query('from') === 'dashboard') {
+            return redirect()->route('dashboard')->with('success', 'Job listing deleted successfully!');
+        }
+
 
         return redirect()->route('jobs.index')->with('success', 'Job listing deleted successfully!');
     }
