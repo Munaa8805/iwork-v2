@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +23,7 @@ class JobController extends Controller
     public function index(): View
     {
         //
-        $jobs = Job::all();
+        $jobs = Job::latest()->get();
         return view('jobs.index')->with('jobs', $jobs);
     }
 

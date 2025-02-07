@@ -23,7 +23,7 @@ class JobFactory extends Factory
             'description' => $this->faker->paragraph(2, true),
             'salary' => $this->faker->numberBetween(40000, 120000),
             'tags' => implode(', ', $this->faker->words(3)),
-            'job_type' => $this->faker->randomElement(['Full-Time', 'Part-Time', 'Contract', 'Temporary', 'Internship']),
+            'job_type' => $this->faker->randomElement(['Full-Time', 'Part-Time', 'Contract', 'Temporary', 'Internship', 'Volunteer', 'On-Call']),
             'remote' => $this->faker->boolean(),
             'requirements' => $this->faker->sentence(3, true),
             'benefits' => $this->faker->sentence(2, true),
