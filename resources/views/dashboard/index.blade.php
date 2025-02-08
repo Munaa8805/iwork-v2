@@ -14,7 +14,7 @@
             </div>
             @else
                 <div class="mt-2 flex justify-center">
-                    <img src="/images/default-avatar.png" alt="{{$user->name}}"class="w-24 h-24 object-cover rounded-full" />
+                    <img src="{{asset('storage/avatars/default-avatar.png')}}"  alt="{{$user->name}}"class="w-24 h-24 object-cover rounded-full" />
                 </div>
             
             @endif
