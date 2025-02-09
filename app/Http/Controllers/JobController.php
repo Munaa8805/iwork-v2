@@ -179,4 +179,5 @@ class JobController extends Controller
         // return view('jobs.share');
         return 'share';
     }
+    
 }

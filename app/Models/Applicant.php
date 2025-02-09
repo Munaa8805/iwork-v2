@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-
 class Applicant extends Model
 {
-    //
     use HasFactory;
 
     protected $fillable = [
@@ -22,11 +20,13 @@ class Applicant extends Model
         'location',
         'resume_path',
     ];
-    // Relationship between applicant and job
+
+    // Relation to job
     public function job(): BelongsTo
     {
         return $this->belongsTo(Job::class);
     }
+
     // Relation to user
     public function user(): BelongsTo
     {
