@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/bookmarks', [BookmarkController::class, 'index'])->name('bookmarks.index');
     Route::post('/bookmarks/{job}', [BookmarkController::class, 'store'])->name('bookmarks.store');
+    Route::delete('/bookmarks/{job}', [BookmarkController::class, 'destroy'])->name('bookmarks.destroy');
 });
 
 // Route::get('/login', [LoginController::class, 'login'])->name('login')->middleware('guest');

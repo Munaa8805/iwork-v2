@@ -11,6 +11,9 @@ use App\Models\Job;
 
 class BookmarkController extends Controller
 {
+
+
+
     // Get all users bookmarks    
     public function index(): View
     {
@@ -18,15 +21,36 @@ class BookmarkController extends Controller
         $bookmarks = $user->bookmarkedJobs()->orderBy('job_user_bookmarks.created_at', 'desc')->paginate(9);
         return view('jobs.bookmarked',)->with('bookmarks', $bookmarks);
     }
+
+    // @desc    Create new bookmarked job
+    // @route   POST /bookmarks/{job}
     public function store(Job $job): RedirectResponse
     {
+
+        // dd($job);
         $user = Auth::user();
         // Check if the job is already bookmarked
         if ($user->bookmarkedJobs()->where('job_id', $job->id)->exists()) {
-            return back()->with('status', 'Job already bookmarked');
+            return back()->with('error', 'Job is not bookmarked');
         }
         // Create new bookmark
         $user->bookmarkedJobs()->attach($job->id);
         return back()->with('success', 'Job bookmarked successfully');
+    }
+
+    // @desc    Remove bookmarked job
+    // @route   DELETE /bookmarks/{job}
+    public function destroy(Job $job): RedirectResponse
+    {
+
+        // dd($job);
+        $user = Auth::user();
+        // Check if the job is not bookmarked
+        if (!$user->bookmarkedJobs()->where('job_id', $job->id)->exists()) {
+            return back()->with('error', 'Job is not bookmarked');
+        }
+        // Remove bookmark
+        $user->bookmarkedJobs()->detach($job->id);
+        return back()->with('success', 'Job removed successfully');
     }
 }

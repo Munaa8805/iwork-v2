@@ -158,7 +158,7 @@
            </p>
            @else
            <form method="POST"
-             action="{{ route('bookmarks.store', $job->id)}}"
+             action="{{auth()->user()->bookmarkedJobs()->where('job_id',$job->id)->exists()? route('bookmarks.destroy', $job->id): route('bookmarks.store', $job->id)}}"
              class="mt-10">
              @csrf
              @if(auth()->user()->bookmarkedJobs()->where('job_id', $job->id)->exists())

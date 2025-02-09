@@ -9,7 +9,7 @@
    @forelse($bookmarks as $bookmark)
    <x-job-card :job="$bookmark" />
     @empty
-    <p class='text-gray-500 text-center'>You have no bookmarked job</p>
+    <p class='text-gray-500 text-center'>You have no bookmarked job.</p>
 @endforelse  
 </div>
 </x-layout>
